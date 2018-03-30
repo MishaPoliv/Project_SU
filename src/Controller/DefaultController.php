@@ -38,7 +38,9 @@ class DefaultController extends Controller
             throw $this->createNotFoundException(' not found ');
         }
 
-       return $this->render('default/show.twig', ['id' => $id]);
+       return $this->render('show.html.twig', ['id' => $id]);
     }
+
+
 
 }
