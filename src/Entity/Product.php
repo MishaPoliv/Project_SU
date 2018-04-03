@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bundle\FrameworkBundle\Tests\Fixtures\Validation\Category;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
@@ -31,6 +32,14 @@ class Product
      * @ORM\Column(type="text", nullable=true)
      */
     private $descripiton;
+
+    /**
+     * @var Category
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $category;
 
     public function getId()
     {
