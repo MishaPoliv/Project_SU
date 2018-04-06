@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use App\Entity\Product;
 
 class DefaultController extends Controller
 {
@@ -17,10 +18,14 @@ class DefaultController extends Controller
         $counter++;
         $session->set('page_counter', $counter);
 
+        $topProducts = $this->getDoctrine()
+            ->getRepository(Product::class)
+            -> findBy (['isTop'=>1]);
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
             'counter' => $counter,
+            'topProductss'=> $topProducts
 
         ]);
     }
