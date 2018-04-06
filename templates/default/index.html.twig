@@ -1,32 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ controller_name }}{% endblock %}
+{% block title %}Start page{% endblock %}
 
 {% block body %}
-<style>
-    #content {
-      bottom: 0;
-    }
-</style>
 
-    <img src="{{ asset('images/images.png') }}" width="150" align="right">
+<h1>Top-goods!</h1>
+    <img src="{{ asset('images/images.png') }}" width="25" align="right">
 
-<div class="example-wrapper">
-
-        <div>
-         <h1>Goods</h1>
-         {% for product in  topProductss %}
-             <ul>
-                  <li><a href="{{ path('product_show', {id: product.id}) }} "> {{ product.title }}</a></li>
-             </ul>
-  {% endfor %}
+<div class="card-deck product">
+    {% for product in topProducts %}
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="//placehold.it/300x200" alt="{{ product.title }}">
+        <div class="card-body">
+            <h5 class="card-title">
+                <a href="{{ path('product_show', {id:product.id}) }}">
+                    {{ product.title }}
+                </a>
+            </h5>
+            <p class="card-text">{{ product.price }}</p>
+            <p class="card-text">{{ product.description }}</p>
+        </div>
     </div>
 
+{% endfor %}
 </div>
-
-
-    <p id="content">Counter: {{ counter }}</p>
-
-    <a id="content" href="{{ url('show', {id: 'new-link-from-index'}) }}">Перейти на sh0w</a>
-
-{% endblock %}
+    {% endblock %}
