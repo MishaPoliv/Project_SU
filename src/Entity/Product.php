@@ -29,7 +29,9 @@ class Product
      * @ORM\Column(type="boolean", options={"default":false})
      */
     private $isTop;
-    public function __construct(){
+    public function __construct()
+        {
+
             $this->isTop=false;
         }
 
@@ -98,5 +100,10 @@ class Product
         $this->isTop = $isTop;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->title;
     }
 }
