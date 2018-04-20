@@ -13,8 +13,14 @@ class UserAdmin extends AbstractAdmin
     {
         $form
             ->add('username')
+            ->add('password')
             ->add('email')
             ->add('roles')
+            ->add('usernameCanonical')
+            ->add('enabled')
+            ->add('lastLogin')
+            ->add('confirmationToken')
+            ->add('salt')
 
         ;
     }
@@ -23,9 +29,16 @@ class UserAdmin extends AbstractAdmin
     {
         $list
             ->addIdentifier('id')
-            ->add('username')
-            ->add('email')
+            ->addIdentifier('username')
+            ->add('password')
+            ->addIdentifier('email')
             ->addIdentifier('roles')
+            ->add('usernameCanonical')
+            ->add('enabled')
+            ->add('lastLogin')
+            ->add('confirmationToken')
+            ->add('salt')
+
 
         ;
     }
@@ -34,8 +47,14 @@ class UserAdmin extends AbstractAdmin
     {
         $filter
             ->add('username')
+            ->add('password')
             ->add('email')
             ->add('roles')
+            ->add('usernameCanonical')
+            ->add('enabled')
+            ->add('lastLogin')
+            ->add('confirmationToken')
+            ->add('salt')
         ;
     }
 }
