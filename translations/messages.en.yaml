@@ -1,0 +1,9 @@
+admin:
+   catagory:
+       title: Edit сategory
+
+   product:
+       title: Edit products
+
+   user:
+       title: Edit users
