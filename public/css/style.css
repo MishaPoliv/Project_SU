@@ -5,3 +5,7 @@ body {
     color: lime;
     background: #002200;
 }
+
+h1, h5, h6 {
+    font-family: SuperPuperFont;
+}

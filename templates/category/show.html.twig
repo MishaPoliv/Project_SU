@@ -1,7 +1,19 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<h1>{{ category.name }}</h1>
+
+    <div class="card" style="width: 3rem;">
+         <img class="card-img-top"
+             src="{%- if category.imageName -%}
+                           {{ vich_uploader_asset(category, 'imageFile') | imagine_filter('squared_category_thumbnail')}}
+                       {%- else -%}
+                           //placehold.it/300x300
+                       {%- endif -%}"
+         alt="{{ category.name }}">
+    </div>
+
+    <h1>{{ category.name }}</h1>
+
 
     <ul>
         {% if category.parent %}
@@ -26,17 +38,27 @@
     <div class="card-deck product">
         {% for product in category.products %}
         <div class="card" style="width: 18rem;">
-         <img class="card-img-top" src="//placehold.it/300x200" alt="{{ product.title }}">
+
+            <img class="card-img-top"
+                 src="{%- if product.imageName -%}
+                           {{ vich_uploader_asset(product, 'imageFile') | imagine_filter('squared_product_thumbnail')}}
+                       {%- else -%}
+                           //placehold.it/300x300
+                       {%- endif -%}"
+                 alt="{{ product.title }}">
+
                  <div class="card-body">
             <h5 class="card-title">
-                  <a href="{{ path('product_show', {id:product.id}) }}">
+
+                <a href="{{ path('product_show', {id:product.id}) }}">
                      {{ product.title }}
-                  </a>
+                </a>
+
             </h5>
                      <p class="card-text">{{ product.price }}</p>
                      <p class="card-text">{{ product.description }}</p>
-         </div>
-    </div>
+                 </div>
+        </div>
         {% endfor %}
     </div>
 {% endblock %}

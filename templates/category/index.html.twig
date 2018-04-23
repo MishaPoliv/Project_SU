@@ -3,17 +3,32 @@
 {% block title %} Категории {% endblock %}
 
 {% block body %}
-    <table class="table">
+    <h5> <table class="table">
         <tr>
             <th>Id</th>
+            <th></th>
             <th>Категория</th>
         </tr>
 
         {% for category in categories %}
             <tr>
                 <td>{{ category.id }}</td>
+               <td>
+
+                   <div class="card" style="width: 3rem;">
+                       <img class="card-img-top"
+                            src="{%- if category.imageName -%}
+                           {{ vich_uploader_asset(category, 'imageFile') | imagine_filter('squared_category_thumbnail')}}
+                       {%- else -%}
+                           //placehold.it/300x300
+                       {%- endif -%}"
+                            alt="{{ category.name }}">
+                   </div>
+
+               </td>
                 <td><a href="{{ path('category_show', {id: category.id}) }}">{{ category.name }}</a></td>
             </tr>
         {% endfor %}
     </table>
+    </h5>
 {% endblock %}
