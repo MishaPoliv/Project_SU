@@ -5,16 +5,21 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Tree\Traits\NestedSetEntity;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
+ * @Gedmo\Tree(type="nested")
+ * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository")
  * @ORM\Table(name="category")
  * @Vich\Uploadable()
  */
 class Category
 {
+    use NestedSetEntity;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -34,7 +39,7 @@ class Category
 
     /**
      * @var Category
-     *
+     * @Gedmo\TreeParent
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="subcategories")
      * @ORM\JoinColumn(name="parent_id", nullable=true)
      */
@@ -42,7 +47,7 @@ class Category
 
     /**
      * @var Category[]
-     *
+     * @ORM\OrderBy({"left" = "ASC"})
      * @ORM\OneToMany(targetEntity="App\Entity\Category", mappedBy="parent")
      */
     private $subcategories;
@@ -271,5 +276,15 @@ class Category
         $this->updatedAt = $updatedAt;
         return $this;
     }
+
+    /**
+     * @return int
+     */
+    public function getLevel(): ?int
+    {
+        return $this->level;
+    }
+
+
 
 }

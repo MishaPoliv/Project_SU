@@ -12,10 +12,9 @@
 
         {% for category in categories %}
             <tr>
-                <td>{{ category.id }}</td>
+               <td>{{ category.id }}</td>
                <td>
-
-                   <div class="card" style="width: 3rem;">
+                   <div class="card" style="width: 5rem;">
                        <img class="card-img-top"
                             src="{%- if category.imageName -%}
                            {{ vich_uploader_asset(category, 'imageFile') | imagine_filter('squared_category_thumbnail')}}
@@ -24,9 +23,8 @@
                        {%- endif -%}"
                             alt="{{ category.name }}">
                    </div>
-
                </td>
-                <td><a href="{{ path('category_show', {id: category.id}) }}">{{ category.name }}</a></td>
+               <td><a href="{{ path('category_show', {id: category.id}) }}">{{ category.name }}</a></td>
             </tr>
         {% endfor %}
     </table>
