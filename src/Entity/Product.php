@@ -40,6 +40,12 @@ class Product
         }
 
     /**
+     * @var OrderItem[]
+     * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="product")
+     */
+    private $orderItems;
+
+    /**
      * @var Category
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="products")
