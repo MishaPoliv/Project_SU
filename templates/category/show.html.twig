@@ -58,6 +58,11 @@
                      <p class="card-text">{{ product.price }}</p>
                      <p class="card-text">{{ product.description }}</p>
                  </div>
+            <div class="card-footer btn-outline-success">
+                <a href="{{ path('order_add_to_cart', {id: product.id}) }}"
+                   class="btn btn-default">Add to basket</a>
+            </div>
+
         </div>
         {% endfor %}
     </div>

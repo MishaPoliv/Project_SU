@@ -1,119 +1,118 @@
 <?php
-
 namespace App\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
-
 /**
- * @ORM\Entity(repositoryClass="App\Repository\OrderItemRepository")
+ * @ORM\Entity
  * @ORM\Table(name="order_items")
  */
 class OrderItem
 {
     /**
-     * @ORM\Id()
+     * @var int
+     *
+     * @ORM\Id
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
     private $id;
-
+    /**
+     * @var Order
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="items")
+     * @ORM\JoinColumn()
+     */
+    private $order;
     /**
      * @var Product
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Product", inversedBy="orderItems")
      * @ORM\JoinColumn()
-    */
-    private $Product;
-
-    /**
-     * @ORM\Column(type="integer")
      */
-    private $Quantity;
-
+    private $product;
     /**
-     * @ORM\Column(type="integer")
+     * @var int
+     *
+     * @ORM\Column(type="integer", options={"default": 0})
      */
-    private $PriceProduct;
-
+    private $quantity;
     /**
-     * @ORM\Column(type="integer")
+     * @var float
+     *
+     * @ORM\Column(type="decimal", precision=10, scale=2, options={"default": 0})
      */
-    private $PriceAllProduct;
-
+    private $price;
     /**
-         * @var Order
-         *
-         * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="orderItems")
-         * @ORM\JoinColumn(nullable=true)
-         */
-    private $orders;
+     * @var float
+     *
+     * @ORM\Column(type="decimal", precision=10, scale=2, options={"default": 0})
+     */
+    private $amount;
 
-
-    public function getId()
+    public function __construct()
+    {
+        $this->quantity = 0;
+        $this->price = 0;
+        $this->amount = 0;
+    }
+    public function getId(): ?int
     {
         return $this->id;
     }
-
-    public function getProduct(): ?Product
-    {
-        return $this->Product;
-    }
-
-    public function setProduct(?Product $Product): self
-    {
-        $this->Product = $Product;
-
-        return $this;
-    }
-
     public function getQuantity(): ?int
     {
-        return $this->Quantity;
+        return $this->quantity;
+    }
+    public function setQuantity(int $quantity): self
+    {
+        $this->quantity = $quantity;
+        $this->updateAmount();
+
+        return $this;
+    }
+    public function getPrice()
+    {
+        return $this->price;
+    }
+    public function setPrice($price): self
+    {
+        $this->price = $price;
+        $this->updateAmount();
+
+        return $this;
+    }
+    public function getAmount()
+    {
+        return $this->amount;
     }
 
-    public function setQuantity(int $Quantity): self
+    public function getOrder(): ?Order
     {
-        $this->Quantity = $Quantity;
+        return $this->order;
+    }
+    public function setOrder(?Order $order): self
+    {
+        $this->order = $order;
+        return $this;
+    }
+    public function getProduct(): ?Product
+    {
+        return $this->product;
+    }
+    public function setProduct(?Product $product): self
+    {
+        $this->product = $product;
+        $this->setPrice($product->getPrice());
 
         return $this;
     }
 
-    public function getPriceProduct(): ?int
+    private function updateAmount()
     {
-        return $this->PriceProduct;
+        $this->amount = round($this->price * $this->quantity, 2);
+
+        if ($this->order) {
+            $this->order->updateAmount();
+        }
     }
-
-    public function setPriceProduct(int $PriceProduct): self
-    {
-        $this->PriceProduct = $PriceProduct;
-
-        return $this;
-    }
-
-    public function getPriceAllProduct(): ?int
-    {
-        return $this->PriceAllProduct;
-    }
-
-    public function setPriceAllProduct(int $PriceAllProduct): self
-    {
-        $this->PriceAllProduct = $PriceAllProduct;
-
-        return $this;
-    }
-
-    public function getOrders(): ?Order
-    {
-        return $this->orders;
-    }
-
-    public function setOrders(?Order $orders): self
-    {
-        $this->orders = $orders;
-
-        return $this;
-    }
-
-
 
 }
