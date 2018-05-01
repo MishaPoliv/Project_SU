@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Order;
 use App\Entity\Product;
 use App\Service\Orders;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,8 +20,13 @@ class OrderController extends Controller
         Product $product,
         $quantity = 1)
     {
-        $orders->addToCart($product, $quantity);
+        $orders->addToCart($product, $quantity, $this->getUser());
 
+        if ($request->isXmlHttpRequest()){
+            return $this->render('order/header_cart.html.twig', [
+                'cart'=>$orders->getCart(),
+                ]);
+        }
 
         return $this->redirect($request->headers->get('referer', '/'));
 
@@ -38,6 +44,17 @@ class OrderController extends Controller
 
         return $this->render('order/cart.html.twig',[
                 'cart' => $cart]);
+    }
+
+
+    /**
+     * @Route("/cart/header", name="order_header_cart")
+     */
+    public function headerCart(Orders $orders)
+    {
+        return $this->render('order/header_cart.html.twig', [
+           'cart'=>$orders->getCart(),
+        ]);
     }
 
 }

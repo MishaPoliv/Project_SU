@@ -47,13 +47,13 @@ class Orders
         if ($order === null) {
             $order = new Order();
             $this->em->persist($order);
-            $this->em->flush();
         }
 
         if ($user) {
             $order->setUser($user);
         }
 
+        $this->em->flush();
         $this->session->set(self::CART_ID, $order->getId());
 
         return $order;
@@ -84,7 +84,6 @@ class Orders
 
         return $order;
     }
-
 
 
 }
