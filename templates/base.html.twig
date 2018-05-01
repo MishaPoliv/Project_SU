@@ -27,10 +27,6 @@
                     <a class="nav-link" href="/product">Product</a>
                 </li>
 
-                <li class="nav-item active">
-                    <a class="nav-link" href="/category">Category</a>
-                </li>
-
 
                 <li class="nav-item dropdown active">
                     {{ render(controller('App\\Controller\\CategoryController::menu')) }}
@@ -51,6 +47,10 @@
 
                 <li class="nav-item active">
                     <a class="nav-link" href="/admin">ADMIN</a>
+                </li>
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('show_cart') }}">Basket</a>
                 </li>
 
 

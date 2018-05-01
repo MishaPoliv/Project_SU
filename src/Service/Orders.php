@@ -3,7 +3,6 @@
 
 namespace App\Service;
 
-
 use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Entity\Product;
@@ -80,5 +79,39 @@ class Orders
         return $order;
     }
 
+    public function getToCart()
+    {
+
+        $orderId = $this->session->get(self::CART_ID);
+
+        $order = null;
+
+        if($orderId !== null){
+            $result = [];
+
+            $orderItem = $this->em->getRepository(OrderItem::class)->findBy(['orders' => $orderId]);
+           
+
+            foreach ($orderItem as $item){
+
+                $prId = $item->getProduct->getId();
+                $value['product'] = $this->em->getRepository(Product::class)->find($prId)->getTitle();
+
+                $value['number'] = $orderId;
+                $value['price'] = $item->em->getPrice();
+                $value['quantity'] = $item->em->getQuantityOfOrder();
+                $value['total'] = $item->em->getTotal();
+
+
+                $result[] = $value;
+        }
+        } else {
+                return $order;
+        }
+
+
+
+        return $result;
+    }
 
 }
