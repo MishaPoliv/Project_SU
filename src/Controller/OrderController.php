@@ -27,27 +27,17 @@ class OrderController extends Controller
     }
 
     /**
-    +     * @param Orders $orders
-    +     * @return \Symfony\Component\HttpFoundation\Response
-    +     *
-    +     * @Route("/cart", name="show_cart")
-    +     */
+    * @param Orders $orders
+    * @return \Symfony\Component\HttpFoundation\Response
+    *
+    * @Route("/cart", name="show_cart")
+    */
     public function cart(Orders $orders)
     {
-        $cartId = $orders->getCart()->getId();
-        $amount = $orders->getCart()->getAmount();
         $cart = $orders->getCart();
-        $error = false;
-        if($cart == null){
-            $error = true;
-        }
 
         return $this->render('order/cart.html.twig',[
-                'cart' => $cart,
-                'error' => $error,
-                'id' => $cartId,
-                'amount' => $amount,
-            ]);
+                'cart' => $cart]);
     }
 
 }
