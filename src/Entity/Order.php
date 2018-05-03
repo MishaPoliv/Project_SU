@@ -157,4 +157,14 @@ class Order
         $this->amount = $total;
     }
 
+    public function getProductsCount()
+    {
+        $count = 0;
+
+        foreach ($this->items as $item){
+            $count += $item->getQuantity();
+        }
+        return $count;
+    }
+
 }

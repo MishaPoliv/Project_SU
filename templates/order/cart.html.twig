@@ -2,45 +2,35 @@
 
 {% block body %}
 
+    <h1>Basket of goods</h1>
 
-    {% if error %}
-             <h3>Basket is empty</h3>
-    {% else %}
+    <table class="table">
+        <tr>
+            <th>Name product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Value</th>
+            <th></th>
+        </tr>
 
-    <h1>Order number{{ id }} </h1>
+        {# @var item \App\Entity\OrderItem #}
+        {% for item in cart.items %}
+            <tr>
+                <td>{{ item.product.title }}</td>
+                <td>{{ item.price }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.amount }}</td>
+                <td><a href="{{ path('order_delete_item', {id: item.id}) }}" class="btn btn-danger">Delete</a> </td>
+            </tr>
+        {% endfor %}
 
-                <table class="table">
+        <tr>
+            <th colspan="3">Total price</th>
+            <th>{{ cart.amount }}</th>
+            <th></th>
+        </tr>
+    </table>
 
-                    <tr>
-                        <th>Item name</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-                        <th>Total price</th>
-                    </tr>
-
-                {% for item in cart %}
-
-                    <tr>
-                        <td>{{ item.product }}</td>
-                        <td>{{ item.quantity }}</td>
-                        <td>{{ item.price }}</td>
-                        <td>{{ item.total }}</td>
-                    </tr>
-
-                {% endfor %}
-
-                    <tr>
-                        <th>Total</th>
-                        <td></td>
-                        <td></td>
-                        <th>{{ amount }}</th>
-                    </tr>
-
-                </table>
-
-
-                <button type="button" class="btn btn-success">Confirm</button>
-
-        {% endif %}
+    <h5>Confirm this order <button type="button" class="btn btn-success">Accept</button></h5>
 
 {% endblock %}

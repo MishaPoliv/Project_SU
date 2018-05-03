@@ -6,6 +6,7 @@ namespace App\Service;
 use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Entity\Product;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -34,7 +35,7 @@ class Orders
         $cart = $this->session->has(self::CART_ID);
     }
 
-    public function getCart(): Order
+    public function getCart(User $user = null): Order
     {
         $order = null;
         $orderId = $this->session->get(self::CART_ID);
@@ -46,16 +47,21 @@ class Orders
         if ($order === null) {
             $order = new Order();
             $this->em->persist($order);
-            $this->em->flush();
+
         }
+
+        if ($user) {
+           $order->setUser($user);
+        }
+        $this->em->flush();
         $this->session->set(self::CART_ID, $order->getId());
 
         return $order;
     }
 
-    public function addToCart(Product $product, $quantity)
+    public function addToCart(Product $product, $quantity , User $user = null):Order
     {
-        $order = $this->getCart();
+        $order = $this->getCart($user);
         $orderItem = null;
 
         foreach ($order->getItems() as $item){
@@ -79,39 +85,6 @@ class Orders
         return $order;
     }
 
-    public function getToCart()
-    {
 
-        $orderId = $this->session->get(self::CART_ID);
-
-        $order = null;
-
-        if($orderId !== null){
-            $result = [];
-
-            $orderItem = $this->em->getRepository(OrderItem::class)->findBy(['orders' => $orderId]);
-
-
-            foreach ($orderItem as $item){
-
-                $prId = $item->getProduct->getId();
-                $value['product'] = $this->em->getRepository(Product::class)->find($prId)->getTitle();
-
-                $value['number'] = $orderId;
-                $value['price'] = $item->em->getPrice();
-                $value['quantity'] = $item->em->getQuantityOfOrder();
-                $value['total'] = $item->em->getTotal();
-
-
-                $result[] = $value;
-        }
-        } else {
-                return $order;
-        }
-
-
-
-        return $result;
-    }
 
 }

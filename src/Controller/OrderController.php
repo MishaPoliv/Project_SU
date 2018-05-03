@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Order;
+use App\Entity\OrderItem;
 use App\Entity\Product;
 use App\Service\Orders;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,35 +21,55 @@ class OrderController extends Controller
         Product $product,
         $quantity = 1)
     {
-        $orders->addToCart($product, $quantity);
+        $orders->addToCart($product, $quantity, $this->getUser());
 
+        if ($request->isXmlHttpRequest()){
+            return $this->render('order/header_cart.html.twig', [
+                  'cart'=>$orders->getCart(),
+                  ]);
+        }
 
         return $this->redirect($request->headers->get('referer', '/'));
 
     }
 
     /**
-    +     * @param Orders $orders
-    +     * @return \Symfony\Component\HttpFoundation\Response
-    +     *
-    +     * @Route("/cart", name="show_cart")
-    +     */
+     * @param Orders $orders
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Route("/cart", name="show_cart")
+     */
     public function cart(Orders $orders)
     {
-        $cartId = $orders->getCart()->getId();
-        $amount = $orders->getCart()->getAmount();
         $cart = $orders->getCart();
-        $error = false;
-        if($cart == null){
-            $error = true;
-        }
 
         return $this->render('order/cart.html.twig',[
-                'cart' => $cart,
-                'error' => $error,
-                'id' => $cartId,
-                'amount' => $amount,
-            ]);
+            'cart' => $cart]);
     }
+
+
+    /**
+    * @Route("/cart/header", name="order_header_cart")
+    */
+    public function headerCart(Orders $orders)
+    {
+        return $this->render('order/header_cart.html.twig', [
+           'cart'=>$orders->getCart(),
+        ]);
+    }
+
+    /**
+     * @Route("order/item/delete/{id}", name="order_delete_item")
+     *
+     */
+    public function deleteItem(OrderItem $orderItem)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($orderItem);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('show_cart');
+    }
+
 
 }

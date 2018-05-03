@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+
         <link rel="shortcut icon" href="http://rold.at.ua/skillup/myshop.png" type="image/png">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -31,13 +33,6 @@
                 <li class="nav-item dropdown active">
                     {{ render(controller('App\\Controller\\CategoryController::menu')) }}
 
-                    {#<a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catalog</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown01">
-                        <a class="dropdown-item" href="/category/2">Phone</a>
-                        <a class="dropdown-item" href="/category/1">TV</a>
-                        <a class="dropdown-item" href="/category/3">iOS</a>
-                        <a class="dropdown-item" href="/category/4">Android</a>
-                    </div> #}
 
                 </li>
 
@@ -49,9 +44,6 @@
                     <a class="nav-link" href="/admin">ADMIN</a>
                 </li>
 
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ path('show_cart') }}">Basket</a>
-                </li>
 
 
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
@@ -80,7 +72,9 @@
                 {% endif %}
 
             </ul>
-
+            <span class="navbar-text" id="header-cart">
+                {{ render(url('order_header_cart')) }}
+            </span>
         </div>
     </nav>
 
@@ -90,10 +84,13 @@
     </main><!-- /.container -->
 
 
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+    <script src="{{ asset('js/main.js') }}"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
