@@ -20,7 +20,7 @@
                 <td>{{ item.price }}</td>
                 <td>{{ item.quantity }}</td>
                 <td>{{ item.amount }}</td>
-                <td><a href="{{ path('order_delete_item', {id: item.id}) }}" class="btn btn-danger">Delete</a> </td>
+                <td><a href="{{ path('order_delete_item', {id: item.id}) }}" class="btn btn-danger" id="js-delete-order-item">Delete</a> </td>
             </tr>
         {% endfor %}
 
@@ -32,5 +32,7 @@
     </table>
 
     <h5>Confirm this order <button type="button" class="btn btn-success">Accept</button></h5>
+
+
 
 {% endblock %}
