@@ -6,6 +6,7 @@ use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Entity\Product;
 use App\Service\Orders;
+use http\Exception\InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -41,7 +42,7 @@ class OrderController extends Controller
      */
     public function cart(Orders $orders)
     {
-        $cart = $orders->getCart();
+        $cart = $orders->getCart($this->getUser());
 
         return $this->render('order/cart.html.twig',[
             'cart' => $cart]);
@@ -54,22 +55,55 @@ class OrderController extends Controller
     public function headerCart(Orders $orders)
     {
         return $this->render('order/header_cart.html.twig', [
-           'cart'=>$orders->getCart(),
+           'cart'=>$orders->getCart($this->getUser()),
         ]);
     }
 
-    /**
+   /* /**
      * @Route("order/item/delete/{id}", name="order_delete_item")
      *
      */
-    public function deleteItem(OrderItem $orderItem)
+  /*  public function deleteItem(OrderItem $orderItem)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($orderItem);
         $entityManager->flush();
 
         return $this->redirectToRoute('show_cart');
+    }*/
+
+    /**
+     * @Route("/cart/delete/{id}", name="order_remove_from_cart")
+     *
+     */
+    public function removeFromCart(Orders $orders, OrderItem $item)
+    {
+
+        $cart = $orders->removeFromCart($item);
+
+        return $this->render('order/cart_table.html.twig', [
+            'cart'=> $cart,
+        ]);
+
     }
 
+    /**
+     * @Route("/cart/update/{id}/{quantity}", name="order_update_cart_item_quantity")
+    */
+    public function updateCartItemQuantity(Orders $orders, OrderItem $item, $quantity)
+    {
 
+        $quantity = (int)$quantity;
+
+        if ($quantity < 1) {
+            $quantity = $item->getQuantity();
+
+        }
+
+        $cart = $orders->updateCartItemQuantity($item, $quantity);
+
+        return $this->render('order/cart_table.html.twig', [
+            'cart'=> $cart,
+        ]);
+    }
 }

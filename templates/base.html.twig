@@ -72,7 +72,7 @@
                 {% endif %}
 
             </ul>
-            <span class="navbar-text" id="header-cart">
+            <span class="navbar-text" id="header-cart" data-href="{{ path('order_header_cart') }}">
                 {{ render(url('order_header_cart')) }}
             </span>
         </div>
