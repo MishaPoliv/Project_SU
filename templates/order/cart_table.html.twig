@@ -7,7 +7,27 @@
         <th></th>
     </tr>
 
-    {{ include('product/list.html.twig', {'cart': cart}) }}
+    {# @var item \App\Entity\OrderItem #}
+    {% for item in cart.items %}
+        <tr>
+            <td>{{ item.product.title }}</td>
+            <td>{{ item.price }}</td>
+            <td>
+                <input type="number" value="{{ item.quantity }}"
+                       min="1" class="js-cart-item-quantity"
+                       data-item-update-url="{{ path('order_update_cart_item_quantity',
+                           {'id': item.id, 'quantity': '--quantity--'}) }}">
+            </td>
+            <td>{{ item.amount }}</td>
+            <td>
+                <a href="{{ path('order_remove_from_cart', {'id': item.id}) }}"
+                   class="btn btn-danger js-remove-from-card"
+                   data-toggle="modal" data-target="#confirmationModal"
+                >Delete</a></td>
+
+
+        </tr>
+    {% endfor %}
 
     <tr>
         <th colspan="3">Total price</th>

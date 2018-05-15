@@ -1,23 +1,19 @@
+<img class="card-img-top"
+     src="{%- if product.imageName -%}
+                           {{ vich_uploader_asset(product, 'imageFile') | imagine_filter('squared_product_thumbnail')}}
+                       {%- else -%}
+                           //placehold.it/300x300
+                       {%- endif -%}"
+     alt="{{ product.title }}">
 
+<div class="card-body">
+    <h5 class="card-title">
 
-{# @var item \App\Entity\OrderItem #}
-    {% for item in cart.items %}
-        <tr>
-            <td>{{ item.product.title }}</td>
-            <td>{{ item.price }}</td>
-            <td>
-                <input type="number" value="{{ item.quantity }}"
-                       min="1" class="js-cart-item-quantity"
-                       data-item-update-url="{{ path('order_update_cart_item_quantity',
-                           {'id': item.id, 'quantity': '--quantity--'}) }}">
-            </td>
-            <td>{{ item.amount }}</td>
-            <td>
-                <a href="{{ path('order_remove_from_cart', {'id': item.id}) }}"
-                   class="btn btn-danger js-remove-from-card"
-                   data-toggle="modal" data-target="#confirmationModal"
-                >Delete</a></td>
+        <a href="{{ path('product_show', {id:product.id}) }}">
+            {{ product.title }}
+        </a>
 
-
-        </tr>
-    {% endfor %}
+    </h5>
+    <p class="card-text">{{ product.price }}</p>
+    <p class="card-text">{{ product.description }}</p>
+</div>
