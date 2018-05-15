@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class Orders
 {
+
+
     const CART_ID = 'cart';
 
     /**
@@ -24,10 +26,32 @@ class Orders
      */
     private $em;
 
-    public function __construct(SessionInterface $session, EntityManagerInterface $em)
+    /**
+     * @var Mailer
+     */
+    private $mailer;
+
+    /**
+     * @var string
+     */
+    private $fromEmail;
+
+    /**
+     * @var string
+     */
+    private $ordersEmail;
+
+    public function __construct(SessionInterface $session,
+                                EntityManagerInterface $em,
+                                Mailer $mailer,
+                                $fromEmail,
+                                $ordersEmail)
     {
         $this->session = $session;
         $this->em = $em;
+        $this->mailer=$mailer;
+        $this->fromEmail=$fromEmail;
+        $this->ordersEmail=$ordersEmail;
     }
 
     public function hasCart()
@@ -109,4 +133,19 @@ class Orders
         return $cart;
 
     }
+
+    public function makeOrder(Order $order)
+    {
+        $order->setStatus(Order::STATUS_ORDERED);
+        $this->em->flush();
+        $this->session->remove(self::CART_ID);
+
+        $this->mailer->sendMessage(
+            '/order/mail/manager.msg.twig',
+            ['order' => $order],
+            $this->fromEmail,
+            $this->ordersEmail
+        );
+    }
+
 }

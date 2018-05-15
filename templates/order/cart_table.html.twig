@@ -1,3 +1,4 @@
+{% if cart.hasItems %}
 <table class="table">
     <tr>
         <th>Name product</th>
@@ -34,4 +35,19 @@
         <th>{{ cart.amount }}</th>
         <th></th>
     </tr>
+
 </table>
+    <h2>Oformlenie zakaza</h2>
+
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        {{ form_widget(form) }}
+
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Podtverdit zakaz">
+            </div>
+
+        {{ form_end(form) }}
+
+    {% else %}
+        <p>Your basket is empty, plz, add to basket <a href="{{ path('category') }}">goods</a> </p>
+    {% endif %}
