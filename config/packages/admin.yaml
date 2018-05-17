@@ -14,8 +14,15 @@ services:
         public: true
 
     admin.user:
-            class: App\Admin\UserAdmin
-            arguments: [~, App\Entity\User, ~]
-            tags:
-                - {name: sonata.admin, manager_type: orm, label: admin.user.title }
-            public: true
+        class: App\Admin\UserAdmin
+        arguments: [~, App\Entity\User, ~]
+        tags:
+            - {name: sonata.admin, manager_type: orm, label: admin.user.title }
+        public: true
+
+    admin.order:
+        class: App\Admin\OrderAdmin
+        arguments: [~, App\Entity\Order, ~]
+        tags:
+            - {name: sonata.admin, manager_type: orm, label: admin.order.title }
+        public: true
