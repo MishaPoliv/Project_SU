@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a85815a25596dac08c18bb85c947d623",
+    "content-hash": "97aa76737f69b9c58ba4718f15ae2d55",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -2440,6 +2440,38 @@
                 "controllers"
             ],
             "time": "2018-02-14T08:40:54+00:00"
+        },
+        {
+            "name": "sirian/suggest-bundle",
+            "version": "v2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sirian/suggest-bundle.git",
+                "reference": "7d9d20dd878f381997642039dcae3c39d3690d9d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sirian/suggest-bundle/zipball/7d9d20dd878f381997642039dcae3c39d3690d9d",
+                "reference": "7d9d20dd878f381997642039dcae3c39d3690d9d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Sirian\\SuggestBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "symfony2 suggest (autocomplete) bundle",
+            "time": "2018-02-18T08:17:18+00:00"
         },
         {
             "name": "sonata-project/admin-bundle",
