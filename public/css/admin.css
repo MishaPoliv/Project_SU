@@ -1,0 +1,11 @@
+.content-wrapper {
+    /*background-color: lime;*/
+}
+
+.ordered {
+    background-color: lime;
+}
+
+.table-striped>tbody>tr.ordered:nth-of-type(odd) {
+    background-color: green;
+}   /* Для "зебры" цвета в таблице */
